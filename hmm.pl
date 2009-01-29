@@ -55,7 +55,7 @@ sub get_states() {
         $p2 = p_state_given_nucleotide($no_cpg_state, $sequence[$_]);
         $trans_p1 = p_state_given_state( $current_state, $cpg_state );
         $trans_p2 = p_state_given_state( $current_state, $no_cpg_state );
-        if( $p1*$trans_p1 > $p2*trans_p2 ) {
+        if( $p1*$trans_p1 > $p2*$trans_p2 ) {
             $current_state = $cpg_state;
         }
         else {
