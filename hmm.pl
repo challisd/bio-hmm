@@ -49,17 +49,20 @@ sub get_states() {
     # Assume we're not in the middle of an island for starters
     $current_state = $no_cpg_state;
     
+
     foreach( 0..@sequence-1 ) {
         $p1 = p_state_given_nucleotide($cpg_state, $sequence[$_]);
         $p2 = p_state_given_nucleotide($no_cpg_state, $sequence[$_]);
-        if( $p1 > $p2 ) {
+        $trans_p1 = p_state_given_state( $current_state, $cpg_state );
+        $trans_p2 = p_state_given_state( $current_state, $no_cpg_state );
+        if( $p1*$trans_p1 > $p2*trans_p2 ) {
             $current_state = $cpg_state;
         }
         else {
             $current_state = $no_cpg_state;
         }
         push (@state_values, $current_state);
-        $probability = $probability + log(max($p1, $p2));
+        $probability = $probability + log(max($p1*trans_p1, $p2*trans_p2));
     }
 }
 
